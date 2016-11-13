@@ -1,28 +1,20 @@
 import marked from 'marked';
-import {createStore} from 'redux';
+import { bindable } from 'aurelia-framework';
+import { createStore } from 'redux';
 import undoable from 'redux-undo';
 import { ActionCreators } from 'redux-undo';
-import {
-  bindable,
-  bindingMode
-} from 'aurelia-framework';
 
 export class Markdown {
-  @bindable({
-    defaultBindingMode: bindingMode.twoWay
-  }) raw;
-
-  store = createStore(undoable(textUpdater));
+  @bindable raw;
   html = '';
+  store = createStore(undoable(textUpdater));
   pastCount = 0;
   futureCount = 0;
 
   constructor() {
     this.store.subscribe(this.update.bind(this));
-    this.update();
   }
 
-  // update properties only here 
   update() {
     const state = this.store.getState().present;
     this.html = state.html;
@@ -48,9 +40,9 @@ export class Markdown {
   }
 }
 
-export const TEXT_UPDATE = 'UPDATE';
+const TEXT_UPDATE = 'UPDATE';
 
-// action
+// action creator
 const updateText = (text) => {
   return {
     type: TEXT_UPDATE,
@@ -59,7 +51,7 @@ const updateText = (text) => {
 };
 
 // reducer
-export function textUpdater(state = { raw: '', html: '' }, action) {
+function textUpdater(state = { raw: '', html: '' }, action) {
   switch (action.type) {
   case TEXT_UPDATE:
     return {

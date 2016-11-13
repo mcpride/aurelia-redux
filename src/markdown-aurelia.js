@@ -1,14 +1,8 @@
 import marked from 'marked';
-import {
-  bindable,
-  bindingMode
-} from 'aurelia-framework';
+import { bindable } from 'aurelia-framework';
 
 export class MarkdownAurelia {
-  @bindable({
-    defaultBindingMode: bindingMode.twoWay
-  }) raw;
-
+  @bindable raw;
   html = '';
 
   rawChanged(newValue) {

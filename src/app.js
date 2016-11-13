@@ -1,5 +1,5 @@
 export class App {
   constructor() {
-    this.data = '# Hello __world__';
+    this.data = 'Hello World!';
   }
 }
